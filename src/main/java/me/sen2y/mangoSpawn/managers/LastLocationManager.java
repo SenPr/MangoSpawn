@@ -28,10 +28,6 @@ public class LastLocationManager {
         return lastLocations.get(uuid);
     }
 
-    public void clearLocations() {
-        lastLocations.clear();
-    }
-
     public boolean teleportBack(UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) return false;
@@ -44,9 +40,7 @@ public class LastLocationManager {
     }
 
     public void teleportAllBack() {
-        lastLocations.forEach((uuid, location) -> {
-            teleportBack(uuid);
-        });
+        lastLocations.forEach((uuid, location) -> teleportBack(uuid));
     }
 
 }

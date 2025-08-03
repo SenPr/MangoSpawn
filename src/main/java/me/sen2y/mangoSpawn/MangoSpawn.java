@@ -6,6 +6,7 @@ import me.sen2y.mangoSpawn.commands.SetSpawnCommand;
 import me.sen2y.mangoSpawn.commands.SpawnCommand;
 import me.sen2y.mangoSpawn.events.TeleportEvents;
 import me.sen2y.mangoSpawn.managers.LastLocationManager;
+import me.sen2y.mangoSpawn.managers.MessageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -22,12 +23,14 @@ public final class MangoSpawn extends JavaPlugin {
     private static MangoSpawn instance;
     private Location spawn;
     private LastLocationManager lastLocationManager;
+    private MessageManager messageManager;
 
     @Override
     public void onEnable() {
         instance = this;
         loadSpawn();
         lastLocationManager = new LastLocationManager();
+        messageManager = new MessageManager(this.getDataFolder());
 
         this.getServer().getPluginManager().registerEvents(new TeleportEvents(), this);
 
@@ -98,6 +101,9 @@ public final class MangoSpawn extends JavaPlugin {
     }
     public LastLocationManager getLastLocationManager() {
         return this.lastLocationManager;
+    }
+    public MessageManager getMessageManager() {
+        return this.messageManager;
     }
 
 }

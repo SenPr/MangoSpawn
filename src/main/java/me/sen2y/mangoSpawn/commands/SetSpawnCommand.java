@@ -17,11 +17,11 @@ public class SetSpawnCommand {
                 .executes(ctx -> {
                     CommandSender sender = ctx.getSource().getSender();
                     if (!(sender instanceof Player player)) {
-                        sender.sendMessage("You are not a player, you cannot use this command");
+                        sender.sendMessage(MangoSpawn.getInstance().getMessageManager().get("not-player"));
                         return Command.SINGLE_SUCCESS;
                     }
                     MangoSpawn.getInstance().saveSpawn(player.getLocation());
-                    player.sendMessage("Spawn saved!");
+                    player.sendMessage(MangoSpawn.getInstance().getMessageManager().get("spawn-saved"));
                     return Command.SINGLE_SUCCESS;
                 })
                 .build();

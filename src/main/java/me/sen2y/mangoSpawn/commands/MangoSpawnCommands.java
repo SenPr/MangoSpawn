@@ -18,8 +18,8 @@ public class MangoSpawnCommands {
 
     private static final LiteralArgumentBuilder<CommandSourceStack> reload = Commands.literal("reload")
             .executes(ctx -> {
-
-                ctx.getSource().getSender().sendMessage("Reloaded MangoSpawn");
+                MangoSpawn.getInstance().getMessageManager().reload();
+                ctx.getSource().getSender().sendMessage(MangoSpawn.getInstance().getMessageManager().get("reload"));
                 return Command.SINGLE_SUCCESS;
             });
 
@@ -32,7 +32,7 @@ public class MangoSpawnCommands {
 
                         if (!MangoSpawn.getInstance().getLastLocationManager()
                                 .teleportBack(target.getUniqueId())) {
-                            ctx.getSource().getSender().sendMessage("Did not send player back, bypassed or no saved location.");
+                            ctx.getSource().getSender().sendMessage(MangoSpawn.getInstance().getMessageManager().get("not-sent"));
                         } else {
                             ctx.getSource().getSender().sendMessage("Sent " + target.getName() + " to last location.");
                         }

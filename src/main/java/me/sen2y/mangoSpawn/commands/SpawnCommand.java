@@ -20,7 +20,7 @@ public class SpawnCommand {
                 .executes(ctx -> {
                     CommandSender sender = ctx.getSource().getSender();
                     if (!(sender instanceof Player player)) {
-                        sender.sendMessage("You are not a player.");
+                        sender.sendMessage(MangoSpawn.getInstance().getMessageManager().get("not-player"));
                         return Command.SINGLE_SUCCESS;
                     }
                     SpawnCommand.teleportSpawn(player);
@@ -35,10 +35,10 @@ public class SpawnCommand {
 
     private static void teleportSpawn(Player player) {
         if (MangoSpawn.getInstance().getSpawn() == null) {
-            player.sendMessage("Spawn is not set.");
+            player.sendMessage(MangoSpawn.getInstance().getMessageManager().get("spawn-unknown"));
             return;
         }
-        player.sendMessage("Teleported to spawn");
+        player.sendMessage(MangoSpawn.getInstance().getMessageManager().get("teleporting"));
         player.teleport(MangoSpawn.getInstance().getSpawn());
     }
 
@@ -47,7 +47,7 @@ public class SpawnCommand {
         Player target = targetResolver.resolve(ctx.getSource()).getFirst();
 
         CommandSender sender = ctx.getSource().getSender();
-        sender.sendMessage("Teleported other player");
+        sender.sendMessage(MangoSpawn.getInstance().getMessageManager().get("teleport-other"));
         teleportSpawn(target);
         return Command.SINGLE_SUCCESS;
     }

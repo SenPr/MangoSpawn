@@ -1,0 +1,7 @@
+teleporting: "<green>Teleporting to spawn...</green>"
+teleport-other: "<green>Teleported other player.</green>"
+spawn-unknown: "<red>Spawn is not set.</red>"
+spawn-saved: "<green>Spawn is set!</green>"
+not-player: "<red>You are not a player.</red>"
+not-sent: "<red>Did not send player back, bypassed or unknown location</red>"
+reload: "<orange>Reloaded MangoSpawn</orange>"

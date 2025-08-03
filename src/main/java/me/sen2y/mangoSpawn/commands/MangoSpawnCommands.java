@@ -24,20 +24,21 @@ public class MangoSpawnCommands {
             });
 
     private static final LiteralArgumentBuilder<CommandSourceStack> back = Commands.literal("back")
-            .then(Commands.argument("target", ArgumentTypes.player()))
-            .executes(ctx -> {
+            .then(Commands.argument("target", ArgumentTypes.player())
+                    .executes(ctx -> {
 
-                PlayerSelectorArgumentResolver targetResolver = ctx.getArgument("target", PlayerSelectorArgumentResolver.class);
-                Player target = targetResolver.resolve(ctx.getSource()).getFirst();
+                        PlayerSelectorArgumentResolver targetResolver = ctx.getArgument("target", PlayerSelectorArgumentResolver.class);
+                        Player target = targetResolver.resolve(ctx.getSource()).getFirst();
 
-                if (!MangoSpawn.getInstance().getLastLocationManager()
-                        .teleportBack(target.getUniqueId())) {
-                    ctx.getSource().getSender().sendMessage("Did not send player back, bypassed or no saved location.");
-                } else {
-                    ctx.getSource().getSender().sendMessage("Sent " + target.getName() + " to last location.");
-                }
-                return Command.SINGLE_SUCCESS;
-            });
+                        if (!MangoSpawn.getInstance().getLastLocationManager()
+                                .teleportBack(target.getUniqueId())) {
+                            ctx.getSource().getSender().sendMessage("Did not send player back, bypassed or no saved location.");
+                        } else {
+                            ctx.getSource().getSender().sendMessage("Sent " + target.getName() + " to last location.");
+                        }
+                        return Command.SINGLE_SUCCESS;
+                    })
+            );
 
     public static LiteralCommandNode<CommandSourceStack> createCommand() {
         return root.then(reload).then(back).build();

@@ -4,6 +4,7 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import me.sen2y.mangoSpawn.commands.MangoSpawnCommands;
 import me.sen2y.mangoSpawn.commands.SetSpawnCommand;
 import me.sen2y.mangoSpawn.commands.SpawnCommand;
+import me.sen2y.mangoSpawn.events.TeleportEvents;
 import me.sen2y.mangoSpawn.managers.LastLocationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -14,6 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
 
 public final class MangoSpawn extends JavaPlugin {
 
@@ -26,6 +28,8 @@ public final class MangoSpawn extends JavaPlugin {
         instance = this;
         loadSpawn();
         lastLocationManager = new LastLocationManager();
+
+        this.getServer().getPluginManager().registerEvents(new TeleportEvents(), this);
 
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
             commands.registrar().register(MangoSpawnCommands.createCommand(), "main commands");
@@ -51,6 +55,11 @@ public final class MangoSpawn extends JavaPlugin {
         File file = getSpawnFile();
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 
+         if (!file.exists()) {
+             this.getLogger().log(Level.WARNING, "Spawn data is not set.");
+             return;
+         }
+
         String worldName = config.getString("world");
         if (worldName == null) {
             return;
@@ -61,8 +70,8 @@ public final class MangoSpawn extends JavaPlugin {
                 config.getDouble("x"),
                 config.getDouble("y"),
                 config.getDouble("z"),
-                config.getFloatList("yaw").getFirst(),
-                config.getFloatList("pitch").getFirst()
+                (float) config.getDouble("yaw"),
+                (float) config.getDouble("pitch")
         );
     }
     public void saveSpawn(Location loc) {
